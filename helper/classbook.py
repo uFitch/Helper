@@ -142,8 +142,6 @@ class Record:
         except:
             print('Phone must start with + and have 12 digits. Example +380501234567 ADD')
 
-    
-
     def remove_phone(self, phone):
         for i in range(len(self.phones)):
             if self.phones[i].phone == phone:
@@ -177,6 +175,5 @@ class Phone(Field):
         else:
             print('Phone number must start with a + and have 12 digits. Example +380501234567')
 
-    
     def __repr__(self):
         return self.phone

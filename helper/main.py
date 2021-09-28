@@ -4,10 +4,10 @@ import json
 import re
 import os
 from datetime import datetime, timedelta, date
-
 from .classbook import *
 from .clean import *
 from .notes_book import NotesBook
+
 
 def error_handler(func):
     def inner(*args):
@@ -18,6 +18,7 @@ def error_handler(func):
             result = input_error()
             return result
     return inner
+
 
 @error_handler
 def main():
@@ -77,6 +78,7 @@ def main():
             pass
         else:
             break
+
 
 @error_handler
 def add():
@@ -218,6 +220,7 @@ def add():
         else:
             print('Wrong input!')
 
+
 @error_handler
 def change():
     print(100*"_")
@@ -230,40 +233,32 @@ def change():
 
     if len(result)>0 and len(result)!=None:
         show_find(result)
-   
         print(100*"_")
         print('1.   To change Name: type "name".\n2.   To change Phone: type "phone".\n3.   To change Birthday: type "birthday".\n4.   To change Address: type "address".\n5.   To change E-mail: type "email".\n6.   To change Tags: type "tags"\n7.   To exit: type "exit".\n')
         decision = str(input())
         decision = decision.lower()
-        
         if decision == 'name' or decision == 'тфьу' or decision == '1':
             print('Type new name')
             new_name = str(input())
-            
             if len(result)>1:
                 print(f"I've found {len(result)} notes with this Name")
                 show_find(result)
                 print('Please enter Id to change the right name')
-                
                 del_input=int(input())
                 for i in result:
                     if i["Id"]==del_input:
                         i['Name'] = new_name
                         save()
                         return say
-            
             elif len(result)==1:
                 for i in result:
                     i['Name'] = new_name
                     save()
                     return say
-
             else:
                 print(f'{old_name} not in Adress Book')
-
         elif decision == 'phone' or decision == 'зрщту' or decision == '2':
             print('Type phone you want to change.If there are no phones - just press "enter".')
-
             if len(result)>1:
                 print(f"I've found {len(result)} notes with this Name")
                 show_find(result)
@@ -284,7 +279,6 @@ def change():
                                         return say
                                     else:
                                         print(f'{old_name} not in Adress Book')   
-
                             elif len(i['Phones'])==1:
                                 i['Phones'].remove(old_name)
                                 i['Phones'].append(new_name)
@@ -292,8 +286,7 @@ def change():
                             elif len(i['Phones'])==0:
                                 i['Phones'].append(new_name)
                                 save()
-                                return say  
-
+                                return say
             elif len(result)==1:
                 old_name = str(input())
                 print('Type new phone')
@@ -308,7 +301,6 @@ def change():
                                 return say
                         else:
                             print(f'{old_name} not in Adress Book')   
-
                     elif len(i['Phones'])==1:
                         i['Phones'].remove(old_name)
                         i['Phones'].append(new_name)
@@ -319,7 +311,6 @@ def change():
                         return say  
             else:
                 print(f'{old_name} not in Adress Book')  
-
         elif decision == 'birthday' or decision == 'ишкервфн' or decision == '3':
             print('Type birthday you want to change. Expected day.month.year(Example:25.12.1970). If there is no birthday - just press "enter".')
             if len(result)>1:
@@ -366,7 +357,6 @@ def change():
                         return say
                     else:
                         print(f'{old_name} not in Adress Book')
-
         elif decision == 'address' or decision == 'adress' or decision == 'adres' or decision == 'фввкуіі' or decision == 'фвкуі' or decision == '4':
             print('Type address you want to change. If there is no address - just press "enter".')
             old_name = str(input())
@@ -383,7 +373,6 @@ def change():
                     return say
                 else:
                     print(f'{old_name} not in Adress Book')
-
         elif decision == 'email' or decision == 'e-mail' or decision == 'уьфшд' or decision == '5':
             print('Type E-mail you want to change. If there are no E-mail - just press "enter".')
             old_name = str(input())
@@ -400,7 +389,6 @@ def change():
                     return say    
                 else:
                     print(f'{old_name} not in Adress Book')
-
         elif decision == 'tags'or decision == 'tag'or decision == 'ефп' or decision == '6':
             print('Type Tags you want to change. If there are no Tags - just press "enter"')
             old_name = str(input())
@@ -417,11 +405,9 @@ def change():
                     return say       
                 else:
                     print(f'{old_name} not in Adress Book')
-
         elif decision == 'exit' or decision == 'esc' or decision == 'close' or decision =='учше' or decision == '7':
             esc_e = False
             return esc_e
-
     else:
         print(f'{old_name} not in Adress Book')
 def clear():
@@ -431,18 +417,17 @@ def clear():
 #START CHaNGE
 @error_handler
 def clean_folder():
-
     print(100*"_")
     print('Welcome to clean folder instrument!')
     print(100*"_")
     print('Please enter path to clean and structurise.')
     user_input = str(input())
-       
     path = pathlib.Path(user_input)
     print_recursive(path,user_input)
     delete_dir(user_input)
     #D:\Tresh
     return 'Everything done! Please check yor folder!'
+
 
 @error_handler
 def birthday():
@@ -451,13 +436,11 @@ def birthday():
     print("1.   If you want to find, who'll have birthday in exact date TYPE 1.\n2.   If you need to know who'll have birthday in period of time TYPE 2.\n3.   If you need to know how many days to somebody's birthday TYPE 3.\n4.   Type 'exit' to exit")
     decision = int(input())
     result = []
-
     if decision == 1:
         print("Please write in how many days will be people's birthday.")
         n = int(input())
         if n >= 365:
            n = n%365
-             
         today_d = datetime.now().date()
         d = timedelta(days = n)
         bday = today_d+d
@@ -467,9 +450,7 @@ def birthday():
                 if days_to_birthday(i["Birthday"]) == n:
                     result.append(i)
         print(f'On {bday} you need to congratulate {len(result)} people from your Addressbook')        
-        
         show_find(result)
-
     elif decision == 2:
         print("Please write how many days in advance to warn you about people's birthday.")
         n = int(input())
@@ -477,14 +458,11 @@ def birthday():
             if i["Birthday"] != 0 and i["Birthday"] != None:
                 if days_to_birthday(i["Birthday"]) <= n:
                     result.append(i)
-                
         if len(result) > 0:
             print(f'In future {n} days you need to congratulate {len(result)} people from your Addressbook')
             show_find(result)
         else:
             print(f'In future {n} days nobody from your Addressbook will have birthday')
-
-
     elif decision == 3:
         print("Please write name to know how many days left to birthday.")
         name = input()
@@ -498,35 +476,30 @@ def birthday():
                 if i["Id"] == id_input:
                     days = days_to_birthday(i['Birthday'])
                     print(f'{i["Name"]} from your Addressbook will have birthday in {days} days. Do not forget to congratulate!')   
-                  
         elif len(result) == 1:
             for i in result:
                 days = days_to_birthday(i['Birthday'])
                 print(f'{i["Name"]} from your Addressbook will have birthday in {days} days. Do not forget to congratulate!')
         else:
             print(f'No information about birthday. Please enter valid information using command "change" or add new person to Addressbook')
-    
     elif decision == 4 or decision == 'exit':
         esc_e = False
         return "Closed"
-
-
-
     else:
         print('Not found this Name!')
-                       
+
+
 def days_to_birthday(bday):
     today_d = datetime.now().date()
     bday = datetime.strptime(bday, "%d.%m.%Y").date()
     bday = date(today_d.year, bday.month, bday.day)
-    
     if today_d > bday:
         bday = date(today_d.year+1, bday.month, bday.day)
         days_left = (bday-today_d)
     else:
         days_left = (bday-today_d)
-    
     return days_left.days
+
 
 @error_handler
 def delete():
@@ -538,29 +511,24 @@ def delete():
     for i in result:
         if i["Name"].lower() != find_v:
             result.remove(i)
-
     if len(result)>1:
         print(f"I've found {len(result)} notes with this Name")
         show_find(result)
         print('Please enter Id to delete the right note')
-        
         del_input = int(input())
         for i in book:
             if i["Name"].lower() == find_v and i["Id"] == del_input:
                 book.remove(i)
                 print(f"You've deleted {find_v}")
                 save() 
-
     elif len(result) == 1:
         for i in result:
             if i["Name"].lower() == find_v:
                 book.remove(i)
                 print(f"You've deleted {find_v}")
                 save()   
-
     else:
-        print(f"{find_v} not found")
-                
+        print(f"{find_v} not found")       
 #end
 
 
@@ -574,13 +542,11 @@ def find():
     
 
 def show_find(v_list):
-    
     print("I've found following:")
     # Печать шапки с названием столбцов
     print(145*'_')
     print('| ID  |           Name           |     Phones      |  Birthday  |           Address            |              E-mail            |       Tags     |')
     print(145*'-')
-    
     for i in v_list:
         print(f'|{i["Id"]:<5}| {i["Name"]:<25}| { i["Phones"][0] if len(i["Phones"])>=1 else " ":<15} | {i["Birthday"]if i["Birthday"] else " ":<11}|{i["Address"]if i["Address"] else " ":<30}|  {i["E-mail"]if i["E-mail"] else " ":<30}| {i["Tags"] if i["Tags"] else " ":<15}|')
         if len(i["Phones"]) > 1:
@@ -588,6 +554,7 @@ def show_find(v_list):
                 print(f'|     |                          | {elem: <15} |            |                              |                                |                |')
         print(f"{145*'_'}")
        
+
 def exit():
     global esc_e
     save()
@@ -600,6 +567,7 @@ def save():
     with open(path, 'wb') as fh:
         pickle.dump(book, fh)
         pickle.dump(notes_book, fh)
+
 
 #@error_handler
 def show1():
@@ -732,42 +700,36 @@ def handler(user_inpu):
         decision = decision.lower()
         if decision == 'y' or decision == 'yes' or decision == 'нуі' or decision == 'н' or decision == 'да' or decision == 'д':
             return change()
-
     elif user_inpu in FIND:
         print('Maybe you mean "find" command?\nIf YES type "yes" or "y"\nIf NO type "no" or "n"')
         decision = str(input())
         decision = decision.lower()
         if decision == 'y' or decision == 'yes' or decision == 'нуі' or decision == 'н' or decision == 'да' or decision == 'д':
             return find()
-    
     elif user_inpu in HELP:
         print('Maybe you mean "help" command?\nIf YES type "yes" or "y"\nIf NO type "no" or "n"')
         decision = str(input())
         decision = decision.lower()
         if decision == 'y' or decision == 'yes' or decision == 'нуі' or decision == 'н' or decision == 'да' or decision == 'д':
             return help()
-
     elif user_inpu in DELETE:
         print('Maybe you mean "delete" command?\nIf YES type "yes" or "y"\nIf NO type "no" or "n"')
         decision = str(input())
         decision = decision.lower()
         if decision == 'y' or decision == 'yes' or decision == 'нуі' or decision == 'н' or decision == 'да' or decision == 'д':
             return delete()
-    
     elif user_inpu in BIRTHDAY:
         print('Maybe you mean "birthday" command?\nIf YES type "yes" or "y"\nIf NO type "no" or "n"')
         decision = str(input())
         decision = decision.lower()
         if decision == 'y' or decision == 'yes' or decision == 'нуі' or decision == 'н' or decision == 'да' or decision == 'д':
             return birthday()
-    
     elif user_inpu in CLEAN:
         print('Maybe you mean "clean" command?\nIf YES type "yes" or "y"\nIf NO type "no" or "n"')
         decision = str(input())
         decision = decision.lower()
         if decision == 'y' or decision == 'yes' or decision == 'нуі' or decision == 'н' or decision == 'да' or decision == 'д':
             return clean_folder()
-
     elif user_inpu in SHOW:
         print('Maybe you mean "show" command?\nIf YES type "yes" or "y"\nIf NO type "no" or "n"')
         decision = str(input())
@@ -776,7 +738,6 @@ def handler(user_inpu):
             return show1()
     else:
         return input_error()
-
 
 
 def input_error():
@@ -788,7 +749,6 @@ ANSWEARS = {'add': add, 'ad': add, '+': add, 'фвв': add,'change': change, 'с
             'delete':delete, 'del':delete, 'вуд':delete, 'вудуеу':delete,'birthday':birthday, 'ишкервфн':birthday, 'clean': clean_folder, 'сдуфт': clean_folder,
             'add note': add_note, 'фвв тщеу': add_note, 'delete note': delete_note, 'вудуеу тщеу': delete_note, 'edit note': edit_note, 'увше тщеу': edit_note,
             'find note': find_note, 'аштв тщеу': find_note, 'sort notes': sort_notes, 'ыщке тщеуы': sort_notes, 'show notes': show_notes, 'ырщц тщеуы': show_notes }
-
 ADD = ['a','ad','addd','asd','asdd','sdd','adf', 'фів', 'івв', 'фівв', 'фввв', 'фва', 'вв', 'ыва', 'фвы', 'фыв', 'явв', 'фв']
 CHANGE = ['chane', 'chnge', 'cange', 'chenge', 'hange', 'chng', 'cchenge', 'chhenge', 'cheenge', 'chaange', 'сменить', 'chang', 'срутпу', 'срутп', 'менять', 'изменить', 'срфтп', 'рсфтпу', 'срутпу','cheng']
 FIND = ['fnd', 'ind', 'fid', 'fin', 'faind', 'fand', 'ffind', 'fiind', 'finnd', 'findd', 'seek', 'look', 'look for', 'атв', 'афтв', 'штв', 'афт', 'поиск', 'искать', 'найти', 'шштв']

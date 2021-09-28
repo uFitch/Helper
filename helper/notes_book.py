@@ -28,7 +28,6 @@ class NotesBook(UserList):
                 # изменяем текст заметки, который находится в note[1]
                 print('You would like to edit the following note:')
                 print(note[1])
-
                 lines = note[1].split('\n')
                 counter = 0
                 for line in lines:
