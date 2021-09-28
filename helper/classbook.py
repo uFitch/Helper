@@ -18,7 +18,6 @@ class Field:
 
 
 class AddressBook(UserList):
-
     data = []
 
     def add_record(self, record):
@@ -26,7 +25,6 @@ class AddressBook(UserList):
 
     def find_value(self, f_value):
         f_value = f_value.lower()
-
         result = []
         for i in self:
             for value in i.values():
@@ -119,7 +117,6 @@ class Record:
                      'E-mail':self.email, 
                      'Tags':self.tags}
 
-
     #Start to add
 
     def add_address(self, address):
@@ -130,7 +127,6 @@ class Record:
 
     def add_id(self, id_n):
         self.id_n = id_n
-
 
     #End
     def add_phone(self, phone):

@@ -45,7 +45,6 @@ def normalize(text):
 
 
 def print_recursive(path,user_input):
-    
     if path.exists():
         if path.is_dir() and path.name not in dir_list :
             for element in path.iterdir():

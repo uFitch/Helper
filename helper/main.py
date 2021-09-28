@@ -589,6 +589,7 @@ def show1():
         print(63*'_'+'The end of the page. PRESS ENTER'+63*'_')
         input()
     return "The end of the contacts book"
+    
 ##############################################################
 # Команды для Handler для работы с NotesBook
 
