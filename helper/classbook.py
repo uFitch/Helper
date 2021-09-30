@@ -6,7 +6,6 @@ from datetime import datetime
 class Field:
     def __init__(self, value):
         self.__value = value
-        # self.value=value
 
     @property
     def value(self):
@@ -34,8 +33,8 @@ class AddressBook(UserList):
                         if i not in result:
                             result.append(i)
                             break
-                elif value != None:
-                    if (isinstance(value, list)):
+                elif value is not None:
+                    if isinstance(value, list):
                         for j in value:
                             j = j.lower()
                             if j.find(f_value) != -1:
@@ -47,11 +46,12 @@ class AddressBook(UserList):
         counter = 0
         result = ""
         for i in self:
-            result += f'|{i["Id"]:<5}| {i["Name"]:<25}| { i["Phones"][0] if len(i["Phones"])>=1 else " ":<15} | {i["Birthday"]if i["Birthday"] else " ":<11}|{i["Address"]if i["Address"] else " ":<30}|  {i["E-mail"]if i["E-mail"] else " ":<30}| {i["Tags"] if i["Tags"] else " ":<15}|\n'
+            result += f'|{i["Id"]:<5}| {i["Name"]:<25}| {i["Phones"][0] if len(i["Phones"]) >= 1 else " ":<15} | {i["Birthday"] if i["Birthday"] else " ":<11}|{i["Address"] if i["Address"] else " ":<30}|  {i["E-mail"] if i["E-mail"] else " ":<30}| {i["Tags"] if i["Tags"] else " ":<15}|\n'
             if len(i["Phones"]) > 1:
                 for elem in i["Phones"][1:]:
-                    result += f'|     |                          | {elem: <15} |            |                              |                                |                | \n'
-            result += f"{145*'_'}\n"
+                    result += f'|     |                          | {elem: <15} |            |                         ' \
+                              f'     |                                |                | \n '
+            result += f"{145 * '_'}\n"
             # конец записи строки с описанием 1 контакта
             counter += 1
             if counter == n:
@@ -64,7 +64,7 @@ class AddressBook(UserList):
             yield result
 
 
-#START OF CHANGING
+# START OF CHANGING
 class Address(Field):
     def __init__(self, address):
         self.address = address
@@ -82,7 +82,7 @@ class Id(Field):
 
 class Email(Field):
     def __init__(self, email):
-        self.email=email
+        self.email = email
 
 
 class Birthday(Field):
@@ -90,11 +90,11 @@ class Birthday(Field):
         self.__birthday = None
         self.birthday = value
 
-    @ property
+    @property
     def birthday(self):
         return self.__birthday.strftime('%d.%m.%Y')
 
-    @ birthday.setter
+    @birthday.setter
     def birthday(self, birthday):
         try:
             self.__birthday = datetime.strptime(birthday, '%d.%m.%Y')
@@ -103,21 +103,21 @@ class Birthday(Field):
 
 
 class Record:
-    def __init__(self, name, id_n, phones=None, birthday=None, address=None, email=None, tags=None ):
+    def __init__(self, name, id_n, phones=None, birthday=None, address=None, email=None, tags=None):
         self.id_n = id_n
         self.phones = []
         self.birthday = None
-        self.address=None
-        self.email=None
-        self.tags=None
+        self.address = None
+        self.email = None
+        self.tags = None
         self.user = {'Id': self.id_n, 'Name': name.name,
-                     'Phones': self.phones, 
-                     'Birthday': self.birthday, 
-                     'Address':self.address, 
-                     'E-mail':self.email, 
-                     'Tags':self.tags}
+                     'Phones': self.phones,
+                     'Birthday': self.birthday,
+                     'Address': self.address,
+                     'E-mail': self.email,
+                     'Tags': self.tags}
 
-    #Start to add
+    # Start to add
 
     def add_address(self, address):
         self.address = address
@@ -128,7 +128,7 @@ class Record:
     def add_id(self, id_n):
         self.id_n = id_n
 
-    #End
+    # End
     def add_phone(self, phone):
         phone = str(phone)
         try:
