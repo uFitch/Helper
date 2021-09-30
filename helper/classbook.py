@@ -27,7 +27,7 @@ class AddressBook(UserList):
         result = []
         for i in self:
             for value in i.values():
-                if (isinstance(value, str)):
+                if isinstance(value, str):
                     value = value.lower()
                     if value.find(f_value) != -1:
                         if i not in result:
